@@ -10,6 +10,11 @@ const app = express();
 
 // sequelize.sync({ force: true });
 
+<<<<<<< HEAD
+=======
+// sequelize.sync({ force: true });
+
+>>>>>>> develop
 app.use(cors());
 app.use(express.json());
 
