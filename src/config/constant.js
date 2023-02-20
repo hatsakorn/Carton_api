@@ -1,2 +1,2 @@
 exports.USER_ADMIN = 'ADMIN';
-exports.USER_EMPLOYYEE = 'EMPLOYYEE';
+exports.USER_EMPLOYEE = 'EMPLOYEE';
