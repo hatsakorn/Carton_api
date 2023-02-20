@@ -27,5 +27,15 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false
     }
   );
+
+  Package.associate = db => {
+    Package.hasMany(db.Items,{
+      foreignKey: {
+        name: 'packageId',
+        allowNull: false
+      },
+      onDelete: 'RESTRICT'
+    });
+  }
   return Package;
 };

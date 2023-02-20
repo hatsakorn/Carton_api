@@ -46,8 +46,16 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: USER_EMPLOYEE
       }
     },
-
     { underscored: true, timestamps: false }
   );
+  Employee.associate = db => {
+    Employee.hasMany(db.Task,{
+      foreignKey: {
+        name: 'employeeId',
+        allowNull: false
+      },
+      onDelete: 'RESTRICT'
+    });
+  }
   return Employee;
 };

@@ -15,5 +15,15 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false
     }
   );
+
+  Warehouse.associate = db => {
+    Warehouse.hasMany(db.Invoice,{
+      foreignKey: {
+        name: 'warehouseId',
+        allowNull: false
+      },
+      onDelete: 'RESTRICT'
+    });
+  }
   return Warehouse;
 };

@@ -49,5 +49,15 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false
     }
   );
+
+  Customer.associate = db => {
+    Customer.hasMany(db.Invoice,{
+      foreignKey: {
+        name: 'customerId',
+        allowNull: false
+      },
+      onDelete: 'RESTRICT'
+    });
+  }
   return Customer;
 };

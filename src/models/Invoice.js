@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
   Invoice.associate = (db) => {
     Invoice.belongsTo(db.Customer, {
       foreignKey: {
-        name: 'userId',
+        name: 'customerId',
         allowNull: false
       },
       onDelete: 'RESTRICT'

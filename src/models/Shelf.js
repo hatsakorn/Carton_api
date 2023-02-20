@@ -13,5 +13,15 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false
     }
   );
+
+  Shelf.associate = db => {
+    Shelf.hasMany(db.Invoice,{
+      foreignKey: {
+        name: 'shelfId',
+        allowNull: false
+      },
+      onDelete: 'RESTRICT'
+    });
+  }
   return Shelf;
 };
