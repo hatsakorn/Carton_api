@@ -47,8 +47,10 @@ const customerRegisterSchema = Joi.object({
 
 exports.customerValidateRegister = validate(customerRegisterSchema);
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 const employeeRegisterSchema = Joi.object({
-  name: Joi.string().trim().required().messages({
+  firstName: Joi.string().trim().required().messages({
     "any.required": "first name is required",
     "string.empty": "first name is required",
     "string.base": "first name must be a string"
@@ -75,7 +77,12 @@ const employeeRegisterSchema = Joi.object({
       "string.empty": "telephoneNumber is required",
       "string.alphanum": "telephoneNumber must contain number or alphabet",
       "string.min": "telephoneNumber mush have at least 10 characters"
-    })
+    }),
+  username: Joi.string().trim().required().messages({
+    "any.required": "user name is required",
+    "string.empty": "user name is required",
+    "string.base": "user name must be a string"
+  })
 });
 
 exports.employeeValidateRegister = validate(employeeRegisterSchema);
