@@ -19,15 +19,15 @@ const customerRegisterSchema = Joi.object({
   }),
 
   companyName: Joi.string().trim().required().messages({
-    "string.empty": "surname is required"
+    "string.empty": "lastName is required"
   }),
   firstName: Joi.string().trim().required().messages({
     "any.required": "first name is required",
     "string.empty": "first name is required",
     "string.base": "first name must be a string"
   }),
-  surname: Joi.string().trim().required().messages({
-    "string.empty": "surname is required"
+  lastName: Joi.string().trim().required().messages({
+    "string.empty": "lastName is required"
   }),
   telephoneNumber: Joi.string()
     .alphanum()
@@ -41,7 +41,7 @@ const customerRegisterSchema = Joi.object({
       "string.min": "telephoneNumber mush have at least 10 characters"
     }),
   address: Joi.string().trim().required().messages({
-    "string.empty": "surname is required"
+    "string.empty": "lastName is required"
   })
 });
 
@@ -55,8 +55,8 @@ const employeeRegisterSchema = Joi.object({
     "string.empty": "first name is required",
     "string.base": "first name must be a string"
   }),
-  surname: Joi.string().trim().required().messages({
-    "string.empty": "surname is required"
+  lastName: Joi.string().trim().required().messages({
+    "string.empty": "lastName is required"
   }),
   email: Joi.string().email({ tlds: false }).required().messages({
     "string.empty": "email is required"
