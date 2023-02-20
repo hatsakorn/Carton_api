@@ -1,3 +1,4 @@
+require('./config/passport')
 const notFoundMiddleware = require("./middlewares/not-found");
 const errorMiddleware = require("./middlewares/error");
 const express = require("express");
