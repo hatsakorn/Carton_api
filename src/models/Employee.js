@@ -1,4 +1,4 @@
-const { USER_EMPLOYYEE } = require('../config/constant');
+const { USER_EMPLOYEE } = require('../config/constant');
 
 module.exports = (sequelize, DataTypes) => {
   const Employee = sequelize.define(
@@ -40,10 +40,10 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
       role: {
-        type: DataTypes.ENUM(USER_EMPLOYYEE, USER_ADMIN),
+        type: DataTypes.ENUM(USER_EMPLOYEE, USER_ADMIN),
 
         allowNull: false,
-        defaultValue: USER_EMPLOYYEE
+        defaultValue: USER_EMPLOYEE
       }
     },
 
