@@ -1,4 +1,4 @@
-const { USER_EMPLOYEE } = require("../config/constant");
+const { USER_EMPLOYEE,USER_ADMIN } = require("../config/constant");
 
 module.exports = (sequelize, DataTypes) => {
   const Employee = sequelize.define(
