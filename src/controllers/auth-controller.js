@@ -6,6 +6,7 @@ const {
 // const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { Customer, Employee } = require("../models");
+const { Op } = require("sequelize");
 
 exports.customerRegister = async (req, res, next) => {
   try {
@@ -13,28 +14,35 @@ exports.customerRegister = async (req, res, next) => {
 
     const customer = await Customer.findOne({
       where: {
-        username: value.username || "",
-        email: value.email || ""
+        [Op.or]: [
+          {
+            username: value.username
+          },
+          { email: value.email }
+        ]
       }
     });
     if (customer) {
       createError("username or email already in use", 400);
-    } else {
-      createError("username or email already in use", 400);
     }
-
     const employee = await Employee.findOne({
       where: {
-        username: value.username || "",
-        email: value.email || ""
+        [Op.or]: [
+          {
+            username: value.username
+          },
+          { email: value.email }
+        ]
       }
     });
     if (employee) {
       createError("username or email is already in use", 400);
-    } else {
-      createError("username or email already in use", 400);
     }
 
+    console.log(customer);
+    // if (customer === employee) {
+    //   createError("username or email is already in use", 400);
+    // }
     value.password = await bcrypt.hash(value.password, 12);
     await Customer.create(value);
 
@@ -54,8 +62,12 @@ exports.employeeRegister = async (req, res, next) => {
 
     const employee = await Employee.findOne({
       where: {
-        username: value.username || "",
-        email: value.email || ""
+        [Op.or]: [
+          {
+            username: value.username
+          },
+          { email: value.email }
+        ]
       }
     });
     if (employee) {
@@ -66,8 +78,12 @@ exports.employeeRegister = async (req, res, next) => {
 
     const customer = await Customer.findOne({
       where: {
-        username: value.username || "",
-        email: value.email || ""
+        [Op.or]: [
+          {
+            username: value.username
+          },
+          { email: value.email }
+        ]
       }
     });
     if (customer) {
