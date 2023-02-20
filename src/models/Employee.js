@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   const Employee = sequelize.define(
     "Employee",
     {
-      name: {
+      firstName: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -44,6 +44,13 @@ module.exports = (sequelize, DataTypes) => {
 
         allowNull: false,
         defaultValue: USER_EMPLOYEE
+      },
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: true
+        }
       }
     },
     { underscored: true, timestamps: false }
