@@ -3,7 +3,7 @@ const Joi = require("joi");
 const validate = require("./validate");
 
 const registerSchema = Joi.object({
-  userName: Joi.string().trim().required().messages({
+  username: Joi.string().trim().required().messages({
     "any.required": "user name is required",
     "string.empty": "user name is required",
     "string.base": "user name must be a string"
@@ -17,20 +17,16 @@ const registerSchema = Joi.object({
     "string.alphanum": "password must contain number or alphabet",
     "string.min": "password mush have at least 6 characters"
   }),
-  confirmPassword: Joi.string()
-    .valid(Joi.ref("password"))
-    .required()
-    .trim()
-    .messages({
-      "any.only": "password and confirm password did not match",
-      "string.empty": "confirm password is required"
-    }),
+
+  companyName: Joi.string().trim().required().messages({
+    "string.empty": "surname is required"
+  }),
   firstName: Joi.string().trim().required().messages({
     "any.required": "first name is required",
     "string.empty": "first name is required",
     "string.base": "first name must be a string"
   }),
-  surName: Joi.string().trim().required().messages({
+  surname: Joi.string().trim().required().messages({
     "string.empty": "surname is required"
   }),
   telephoneNumber: Joi.string()
@@ -43,7 +39,14 @@ const registerSchema = Joi.object({
       "string.empty": "telephoneNumber is required",
       "string.alphanum": "telephoneNumber must contain number or alphabet",
       "string.min": "telephoneNumber mush have at least 10 characters"
+    }),
+  address: Joi.string()
+    .trim()
+    .required()
+    .messages({
+      "string.empty": "surname is required"
     })
+    .strip()
 });
 
 exports.validateRegister = validate(registerSchema);

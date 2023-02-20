@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       telephoneNumber: {
         type: DataTypes.STRING,
-        unique: true,
+
         validate: {
           is: /^[0-9]{10}$/
         }
