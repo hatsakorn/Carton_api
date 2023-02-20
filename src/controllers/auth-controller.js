@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-require("dotenv");
+require("dotenv").config();
 
 const { Customer, Employee } = require("../models");
 const createError = require("../utils/create-error");
@@ -34,6 +34,7 @@ exports.login = async (req, res, next) => {
       createError("invalid username or password");
     }
 
+    let accessToken;
     if (customer) {
       const isCorrect = await bcrypt.compare(password, customer.password);
 
@@ -43,17 +44,21 @@ exports.login = async (req, res, next) => {
         createError("invalid username or password");
       }
 
-      caccessToken = jwt.sign({
-        id: customer.id,
-        username: customer.username,
-        email: customer.email,
-        companyName: customer.companyName,
-        firstName: customer.firstName,
-        lastName: customer.lastName
-      });
+      accessToken = jwt.sign(
+        {
+          id: customer.id,
+          username: customer.username,
+          email: customer.email,
+          companyName: customer.companyName,
+          firstName: customer.firstName,
+          lastName: customer.lastName
+        },
+        process.env.JWT_SECRET_KEY,
+        {
+          expiresIn: process.env.JWT_EXPIRES_IN
+        }
+      );
     }
-
-    let accessToken;
 
     if (employee) {
       isCorrect = await bcrypt.compare(password, employee.password);
@@ -100,7 +105,7 @@ exports.login = async (req, res, next) => {
         }
       );
     }
-
+    console.log(accessToken);
     res.status(200).json({ accessToken });
   } catch (err) {
     next(err);
