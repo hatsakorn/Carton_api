@@ -1,9 +1,9 @@
-require('./config/passport')
-require('dotenv')
+require("./config/passport");
+require("dotenv");
 
 const notFoundMiddleware = require("./middlewares/not-found");
 const errorMiddleware = require("./middlewares/error");
-const authRoute = require("./routes/auth-route")
+const authRoute = require("./routes/auth-route");
 
 const express = require("express");
 const cors = require("cors");
