@@ -1,7 +1,7 @@
-const notFoundMiddleware = require('./middlewares/not-found');
-const errorMiddleware = require('./middlewares/error');
-const express = require('express');
-const cors = require('cors');
+const notFoundMiddleware = require("./middlewares/not-found");
+const errorMiddleware = require("./middlewares/error");
+const express = require("express");
+const cors = require("cors");
 const app = express();
 
 app.use(cors());
