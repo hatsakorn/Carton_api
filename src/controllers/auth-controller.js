@@ -1,12 +1,15 @@
 const createError = require("../utils/create-error");
-const { validateRegister } = require("../validators/auth-validators");
+const {
+  customerValidateRegister,
+  employeeValidateRegister
+} = require("../validators/auth-validators");
 // const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const { Customer } = require("../models");
+const { Customer, Employee } = require("../models");
 
 exports.customerRegister = async (req, res, next) => {
   try {
-    const value = validateRegister(req.body);
+    const value = customerValidateRegister(req.body);
 
     const customer = await Customer.findOne({
       where: {
@@ -23,6 +26,32 @@ exports.customerRegister = async (req, res, next) => {
     res
       .status(201)
       .json({ message: "register success. please log in to continue." });
+  } catch (err) {
+    next(err);
+  }
+};
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+exports.employeeRegister = async (req, res, next) => {
+  try {
+    const value = employeeValidateRegister(req.body);
+
+    const employee = await Employee.findOne({
+      where: {
+        email: value.email || ""
+      }
+    });
+    if (employee) {
+      createError("email  is already in use", 400);
+    }
+
+    value.password = await bcrypt.hash(value.password, 12);
+    await Employee.create(value);
+
+    res.status(201).json({
+      message: "employee register success. please log in to continue."
+    });
   } catch (err) {
     next(err);
   }
