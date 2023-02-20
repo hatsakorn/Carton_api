@@ -1,10 +1,14 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-
 const { Customer, Employee } = require("../models");
 const createError = require("../utils/create-error");
 const { USER_EMPLOYEE, USER_ADMIN } = require("../config/constant");
+const {
+  customerValidateRegister,
+  employeeValidateRegister
+} = require("../validators/auth-validators");
+const { Op } = require("sequelize");
 
 exports.login = async (req, res, next) => {
   try {
@@ -107,6 +111,97 @@ exports.login = async (req, res, next) => {
     }
     console.log(accessToken);
     res.status(200).json({ accessToken });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.customerRegister = async (req, res, next) => {
+  try {
+    const value = customerValidateRegister(req.body);
+
+    const customer = await Customer.findOne({
+      where: {
+        [Op.or]: [
+          {
+            username: value.username
+          },
+          { email: value.email }
+        ]
+      }
+    });
+    if (customer) {
+      createError("username or email already in use", 400);
+    }
+    const employee = await Employee.findOne({
+      where: {
+        [Op.or]: [
+          {
+            username: value.username
+          },
+          { email: value.email }
+        ]
+      }
+    });
+    if (employee) {
+      createError("username or email is already in use", 400);
+    }
+
+    console.log(customer);
+    // if (customer === employee) {
+    //   createError("username or email is already in use", 400);
+    // }
+    value.password = await bcrypt.hash(value.password, 12);
+    await Customer.create(value);
+
+    res
+      .status(201)
+      .json({ message: "register success. please log in to continue." });
+  } catch (err) {
+    next(err);
+  }
+};
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+exports.employeeRegister = async (req, res, next) => {
+  try {
+    const value = employeeValidateRegister(req.body);
+
+    const employee = await Employee.findOne({
+      where: {
+        [Op.or]: [
+          {
+            username: value.username
+          },
+          { email: value.email }
+        ]
+      }
+    });
+    if (employee) {
+      createError("username or email is already in use", 400);
+    }
+
+    const customer = await Customer.findOne({
+      where: {
+        [Op.or]: [
+          {
+            username: value.username
+          },
+          { email: value.email }
+        ]
+      }
+    });
+    if (customer) {
+      createError("username or email is already in use", 400);
+    }
+
+    value.password = await bcrypt.hash(value.password, 12);
+    await Employee.create(value);
+
+    res.status(201).json({
+      message: "employee register success. please log in to continue."
+    });
   } catch (err) {
     next(err);
   }
