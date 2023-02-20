@@ -45,7 +45,8 @@ module.exports = (sequelize, DataTypes) => {
         address: DataTypes.STRING
       },
       {
-        underscored: true
+        underscored: true,
+        timestamps: false
       }
     );
     return Customer;
