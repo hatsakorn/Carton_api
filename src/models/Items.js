@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Items = sequelize.define(
-    'Items',
+    "Items",
     {
       details: {
         type: DataTypes.STRING,
@@ -44,26 +44,26 @@ module.exports = (sequelize, DataTypes) => {
   Items.associate = (db) => {
     Items.belongsTo(db.Invoice, {
       foreignKey: {
-        name: 'invoiceId',
+        name: "invoiceId",
         allowNull: false
       },
-      onDelete: 'RESTRICT'
+      onDelete: "RESTRICT"
     });
 
     Items.belongsTo(db.Shelf, {
       foreignKey: {
-        name: 'shelfId',
+        name: "shelfId",
         allowNull: false
       },
-      onDelete: 'RESTRICT'
+      onDelete: "RESTRICT"
     });
 
     Items.belongsTo(db.Package, {
       foreignKey: {
-        name: 'packageId',
+        name: "packageId",
         allowNull: false
       },
-      onDelete: 'RESTRICT'
+      onDelete: "RESTRICT"
     });
   };
 

@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Task = sequelize.define(
-    'Task',
+    "Task",
     {
       task: {
         type: DataTypes.STRING,
@@ -23,18 +23,18 @@ module.exports = (sequelize, DataTypes) => {
   Task.associate = (db) => {
     Task.belongsTo(db.Employee, {
       foreignKey: {
-        name: 'employeeId',
+        name: "employeeId",
         allowNull: false
       },
-      onDelete: 'RESTRICT'
+      onDelete: "RESTRICT"
     });
 
     Task.belongsTo(db.Warehouse, {
       foreignKey: {
-        name: 'warehouseId',
+        name: "warehouseId",
         allowNull: false
       },
-      onDelete: 'RESTRICT'
+      onDelete: "RESTRICT"
     });
   };
 

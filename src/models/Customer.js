@@ -50,14 +50,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Customer.associate = db => {
-    Customer.hasMany(db.Invoice,{
+  Customer.associate = (db) => {
+    Customer.hasMany(db.Invoice, {
       foreignKey: {
-        name: 'customerId',
+        name: "customerId",
         allowNull: false
       },
-      onDelete: 'RESTRICT'
+      onDelete: "RESTRICT"
     });
-  }
+  };
   return Customer;
 };

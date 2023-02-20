@@ -1,8 +1,8 @@
-const { USER_EMPLOYEE } = require('../config/constant');
+const { USER_EMPLOYEE } = require("../config/constant");
 
 module.exports = (sequelize, DataTypes) => {
   const Employee = sequelize.define(
-    'Employee',
+    "Employee",
     {
       name: {
         type: DataTypes.STRING,
@@ -48,14 +48,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     { underscored: true, timestamps: false }
   );
-  Employee.associate = db => {
-    Employee.hasMany(db.Task,{
+  Employee.associate = (db) => {
+    Employee.hasMany(db.Task, {
       foreignKey: {
-        name: 'employeeId',
+        name: "employeeId",
         allowNull: false
       },
-      onDelete: 'RESTRICT'
+      onDelete: "RESTRICT"
     });
-  }
+  };
   return Employee;
 };

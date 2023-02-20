@@ -14,14 +14,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Shelf.associate = db => {
-    Shelf.hasMany(db.Invoice,{
+  Shelf.associate = (db) => {
+    Shelf.hasMany(db.Invoice, {
       foreignKey: {
-        name: 'shelfId',
+        name: "shelfId",
         allowNull: false
       },
-      onDelete: 'RESTRICT'
+      onDelete: "RESTRICT"
     });
-  }
+  };
   return Shelf;
 };

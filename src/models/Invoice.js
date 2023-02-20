@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Invoice = sequelize.define(
-    'Invoice',
+    "Invoice",
     {
       status: {
         type: DataTypes.STRING,
@@ -30,10 +30,10 @@ module.exports = (sequelize, DataTypes) => {
   Invoice.associate = (db) => {
     Invoice.belongsTo(db.Customer, {
       foreignKey: {
-        name: 'customerId',
+        name: "customerId",
         allowNull: false
       },
-      onDelete: 'RESTRICT'
+      onDelete: "RESTRICT"
     });
   };
 

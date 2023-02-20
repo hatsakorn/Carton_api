@@ -16,14 +16,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Warehouse.associate = db => {
-    Warehouse.hasMany(db.Invoice,{
+  Warehouse.associate = (db) => {
+    Warehouse.hasMany(db.Invoice, {
       foreignKey: {
-        name: 'warehouseId',
+        name: "warehouseId",
         allowNull: false
       },
-      onDelete: 'RESTRICT'
+      onDelete: "RESTRICT"
     });
-  }
+  };
   return Warehouse;
 };
