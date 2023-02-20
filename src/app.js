@@ -1,4 +1,5 @@
 require('./config/passport')
+require('dotenv')
 const notFoundMiddleware = require("./middlewares/not-found");
 const errorMiddleware = require("./middlewares/error");
 const express = require("express");
