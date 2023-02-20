@@ -13,20 +13,26 @@ exports.customerRegister = async (req, res, next) => {
 
     const customer = await Customer.findOne({
       where: {
-        username: value.username || ""
+        username: value.username || "",
+        email: value.email || ""
       }
     });
     if (customer) {
-      createError("username is already in use", 400);
+      createError("username or email already in use", 400);
+    } else {
+      createError("username or email already in use", 400);
     }
 
     const employee = await Employee.findOne({
       where: {
-        username: value.username || ""
+        username: value.username || "",
+        email: value.email || ""
       }
     });
     if (employee) {
-      createError("username  is already in use", 400);
+      createError("username or email is already in use", 400);
+    } else {
+      createError("username or email already in use", 400);
     }
 
     value.password = await bcrypt.hash(value.password, 12);
@@ -48,20 +54,26 @@ exports.employeeRegister = async (req, res, next) => {
 
     const employee = await Employee.findOne({
       where: {
-        username: value.username || ""
+        username: value.username || "",
+        email: value.email || ""
       }
     });
     if (employee) {
-      createError("username  is already in use", 400);
+      createError("username or email is already in use", 400);
+    } else {
+      createError("username or email already in use", 400);
     }
 
     const customer = await Customer.findOne({
       where: {
-        username: value.username || ""
+        username: value.username || "",
+        email: value.email || ""
       }
     });
     if (customer) {
-      createError("username is already in use", 400);
+      createError("username or email is already in use", 400);
+    } else {
+      createError("username or email already in use", 400);
     }
 
     value.password = await bcrypt.hash(value.password, 12);
