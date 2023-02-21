@@ -5,6 +5,7 @@ const upload = require("../middlewares/upload");
 const router = express.Router();
 
 router.get("/", packageController.getAllPackage);
+router.patch("/:packageId", packageController.patchStatusPackage);
 
 router.post(
   "/",

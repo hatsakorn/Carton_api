@@ -19,7 +19,6 @@ exports.getAllPackage = async (req, res, next) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 exports.postPackage = async (req, res, next) => {
-  // console.log(req);
   try {
     const title = { title: req.body.title };
     const description = { description: req.body.description };
@@ -33,7 +32,6 @@ exports.postPackage = async (req, res, next) => {
       ? cloudinary.getPublicId(posterUrl[0].path)
       : null;
 
-    console.log("id", posterUrlPublicId);
     const postpackage = await Package.findOne({
       where: {
         title: title.title
@@ -63,5 +61,19 @@ exports.postPackage = async (req, res, next) => {
     next(err);
   } finally {
     fs.unlinkSync(req.files.posterUrl[0].path);
+  }
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+exports.patchStatusPackage = async (req, res, next) => {
+  try {
+    const { packageId } = req.params;
+    const { isActive } = req.body;
+    await Package.update({ isActive: isActive }, { where: { id: packageId } });
+
+    res.status(201).json({ message: "upstatus success. " });
+  } catch (err) {
+    next(err);
   }
 };
