@@ -3,12 +3,9 @@ require("dotenv");
 
 const notFoundMiddleware = require("./middlewares/not-found");
 const errorMiddleware = require("./middlewares/error");
-<<<<<<< HEAD
 const packageRoute = require("./routes/package-route");
-=======
 const authRoute = require("./routes/auth-route");
 
->>>>>>> develop
 const express = require("express");
 const cors = require("cors");
 const app = express();
@@ -19,11 +16,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-<<<<<<< HEAD
 app.use("/package", packageRoute);
-=======
 app.use("/auth", authRoute);
->>>>>>> develop
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
