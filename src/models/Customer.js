@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true
         }
       },
-      surname: {
+      lastName: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       telephoneNumber: {
         type: DataTypes.STRING,
+
         validate: {
           is: /^[0-9]{10}$/
         }
