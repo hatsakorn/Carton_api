@@ -1,3 +1,4 @@
+const fs = require("fs");
 const { Package } = require("../models");
 const createError = require("../utils/create-error");
 const cloudinary = require("../utils/cloudinary");
@@ -60,5 +61,7 @@ exports.postPackage = async (req, res, next) => {
     res.status(201).json({ message: "postPackage success. " });
   } catch (err) {
     next(err);
+  } finally {
+    fs.unlinkSync(req.files.posterUrl[0].path);
   }
 };
