@@ -12,8 +12,10 @@ exports.CreateInvoice = async (req, res, next) => {
       return res.status(400).json({ error: "Falied to create invoice" });
     try {
       const items = await Items.bulkCreate(value);
-      if(items==0) await newInvoice.destroy();
-      return res.status(400).json({ error: "no item in invoice" });
+      if(items==0) {
+        await newInvoice.destroy();
+        return res.status(400).json({ error: "no item in invoice" });
+      }
     } catch (err) {
       await newInvoice.destroy();
       return res.status(400).json({ error: "Failed to create items" });
