@@ -42,7 +42,16 @@ const customerRegisterSchema = Joi.object({
     }),
   address: Joi.string().trim().required().messages({
     "string.empty": "lastName is required"
+  }),
+  confirmPassword: Joi.string()
+  .valid(Joi.ref('password'))
+  .required()
+  .trim()
+  .messages({
+    'any.only': 'password and confirm password did not match',
+    'string.empty': 'confirm password is required'
   })
+  .strip()
 });
 
 exports.customerValidateRegister = validate(customerRegisterSchema);
