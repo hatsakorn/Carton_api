@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Shelf.associate = (db) => {
-    Shelf.hasMany(db.Invoice, {
+    Shelf.hasMany(db.Items, {
       foreignKey: {
         name: "shelfId",
         allowNull: false

@@ -42,6 +42,14 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Items.associate = (db) => {
+    Items.hasOne(db.Task, {
+      foreignKey: {
+        name: "itemId",
+        allowNull: false
+      },
+      onDelete: "RESTRICT"
+    });
+
     Items.belongsTo(db.Invoice, {
       foreignKey: {
         name: "invoiceId",
@@ -61,14 +69,6 @@ module.exports = (sequelize, DataTypes) => {
     Items.belongsTo(db.Package, {
       foreignKey: {
         name: "packageId",
-        allowNull: false
-      },
-      onDelete: "RESTRICT"
-    });
-
-    Items.belongsTo(db.Task, {
-      foreignKey: {
-        name: "taskId",
         allowNull: false
       },
       onDelete: "RESTRICT"

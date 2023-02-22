@@ -21,9 +21,9 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Task.associate = (db) => {
-    Task.hasMany(db.Items, {
+    Task.belongsTo(db.Items, {
       foreignKey: {
-        name: "taskId",
+        name: "itemId",
         allowNull: false
       },
       onDelete: "RESTRICT"
