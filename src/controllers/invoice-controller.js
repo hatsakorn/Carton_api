@@ -1,8 +1,9 @@
 const { Invoice, Items } = require("../models");
-exports.CreateReservation = async (req, res, next) => {
+exports.CreateInvoice = async (req, res, next) => {
   try {
+    console.log(req)
     const value = req.body;
-    const customerId = req.customer.id;
+    const customerId = req.user.id;
     const newInvoice = await Invoice.create({ customerId });
     if (!newInvoice)
       return res.status(400).json({ error: "Falied to create invoice" });
