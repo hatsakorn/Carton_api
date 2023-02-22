@@ -4,7 +4,10 @@ exports.CreateInvoice = async (req, res, next) => {
     console.log(req)
     const value = req.body;
     const customerId = req.user.id;
-    const newInvoice = await Invoice.create({ customerId });
+    const newInvoice = await Invoice.create({ 
+      customerId,
+      status: "PENDING"
+    });
     if (!newInvoice)
       return res.status(400).json({ error: "Falied to create invoice" });
     try {
