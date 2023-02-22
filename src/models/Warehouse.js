@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Warehouse.associate = (db) => {
-    Warehouse.hasMany(db.Invoice, {
+    Warehouse.hasMany(db.Shelf, {
       foreignKey: {
         name: "warehouseId",
         allowNull: false
