@@ -48,8 +48,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Items.belongsTo(db.Shelf, {
       foreignKey: {
-        name: "shelfId",
-        allowNull: false
+        name: "shelfId"
       },
       onDelete: "RESTRICT"
     });
