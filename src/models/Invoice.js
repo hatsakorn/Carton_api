@@ -9,7 +9,6 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true
         }
       },
-
       transactionId: {
         type: DataTypes.STRING,
         allowNull: false,
