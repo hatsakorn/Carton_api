@@ -91,7 +91,16 @@ const employeeRegisterSchema = Joi.object({
     "any.required": "user name is required",
     "string.empty": "user name is required",
     "string.base": "user name must be a string"
-  })
+  }),
+  confirmPassword: Joi.string()
+    .valid(Joi.ref("password"))
+    .required()
+    .trim()
+    .messages({
+      "any.only": "password and confirm password did not match",
+      "string.empty": "confirm password is required"
+    })
+    .strip()
 });
 
 exports.employeeValidateRegister = validate(employeeRegisterSchema);
