@@ -42,6 +42,14 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Items.associate = (db) => {
+    Items.hasOne(db.Task, {
+      foreignKey: {
+        name: "itemId",
+        allowNull: false
+      },
+      onDelete: "RESTRICT"
+    });
+
     Items.belongsTo(db.Invoice, {
       foreignKey: {
         name: "invoiceId",
