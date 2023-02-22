@@ -1,10 +1,13 @@
 const express = require("express");
-const customerController = require("../controllers/admin-controller");
+const adminController = require("../controllers/admin-controller");
 const upload = require("../middlewares/upload");
 
 const router = express.Router();
 
-router.get("/", customerController.getMainAdmin);
-router.get("/task/", customerController.getTaskAdminByIdAndBody);
+router.get("/", adminController.getMainAdmin);
+router.get("/task/", adminController.getTaskAdmin);
+router.post("/createTask", adminController.createTask);
+
+// router.post("/assignTask", adminController.postAssignTask);
 
 module.exports = router;
