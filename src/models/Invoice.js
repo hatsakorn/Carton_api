@@ -28,6 +28,14 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Invoice.associate = (db) => {
+    Invoice.hasMany(db.Items, {
+      foreignKey: {
+        name: "invoiceId",
+        allowNull: false
+      },
+      onDelete: "RESTRICT"
+    });
+
     Invoice.belongsTo(db.Customer, {
       foreignKey: {
         name: "customerId",

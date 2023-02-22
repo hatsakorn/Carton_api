@@ -19,6 +19,9 @@ exports.getAllPackage = async (req, res, next) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 exports.postPackage = async (req, res, next) => {
+  // console.log("++++++++++++++++++++++++++++++++");
+  // console.log(req);
+  // console.log("+++++++++++++++++++++++++++");
   try {
     const title = { title: req.body.title };
     const description = { description: req.body.description };
@@ -27,7 +30,9 @@ exports.postPackage = async (req, res, next) => {
     const startDate = { startDate: req.body.startDate };
     const endDate = { endDate: req.body.endDate };
     const { posterUrl } = req.files;
-
+    // console.log("*******************************");
+    console.log(posterUrl);
+    // console.log("*******************************");
     const posterUrlPublicId = posterUrl[0].path
       ? cloudinary.getPublicId(posterUrl[0].path)
       : null;
@@ -59,9 +64,10 @@ exports.postPackage = async (req, res, next) => {
     res.status(201).json({ message: "postPackage success. " });
   } catch (err) {
     next(err);
-  } finally {
-    fs.unlinkSync(req.files.posterUrl[0].path);
   }
+  //  finally {
+  //   fs.unlinkSync(req.files.posterUrl[0].path);
+  // }
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -65,6 +65,14 @@ module.exports = (sequelize, DataTypes) => {
       },
       onDelete: "RESTRICT"
     });
+
+    Items.belongsTo(db.Task, {
+      foreignKey: {
+        name: "taskId",
+        allowNull: false
+      },
+      onDelete: "RESTRICT"
+    });
   };
 
   return Items;

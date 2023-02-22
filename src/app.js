@@ -10,9 +10,9 @@ const customerRoute = require("./routes/customer-route");
 const express = require("express");
 const cors = require("cors");
 const app = express();
-// const { sequelize } = require("./models");
-
-// sequelize.sync({ force: true });
+const { sequelize } = require("./models");
+// sequelize.sync({ alter: true });
+sequelize.sync({ force: true });
 
 app.use(cors());
 app.use(express.json());

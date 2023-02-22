@@ -22,6 +22,14 @@ module.exports = (sequelize, DataTypes) => {
       },
       onDelete: "RESTRICT"
     });
+
+    Shelf.belongsTo(db.Warehouse, {
+      foreignKey: {
+        name: "warehouseId",
+        allowNull: false
+      },
+      onDelete: "RESTRICT"
+    });
   };
   return Shelf;
 };
