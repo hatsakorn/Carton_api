@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
       dateIn: DataTypes.STRING,
-      dateOut: DataTypes.STRING,
+      dateOut: DataTypes.STRING
     },
     { underscored: true, timestamps: false }
   );
