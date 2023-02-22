@@ -21,17 +21,17 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Task.associate = (db) => {
-    Task.belongsTo(db.Employee, {
+    Task.belongsTo(db.Items, {
       foreignKey: {
-        name: "employeeId",
+        name: "itemId",
         allowNull: false
       },
       onDelete: "RESTRICT"
     });
 
-    Task.belongsTo(db.Warehouse, {
+    Task.belongsTo(db.Employee, {
       foreignKey: {
-        name: "warehouseId",
+        name: "employeeId",
         allowNull: false
       },
       onDelete: "RESTRICT"
