@@ -1,25 +1,15 @@
-const { Task, Items, Shelf, Warehouse } = require("../models");
+const { Task, Items, Shelf, Warehouse, Invoice } = require("../models");
 const createError = require("../utils/create-error");
 
-exports.getMainAdminById = async (req, res, next) => {
+exports.getMainAdmin = async (req, res, next) => {
   try {
-    const { employeeId } = req.params;
-
-    const mainAdmin = await Task.findAll({
-      where: {
-        employeeId: employeeId
-      },
+    const mainAdmin = await Items.findAll({
       include: [
         {
-          model: Items,
+          model: Shelf,
           include: [
             {
-              model: Shelf,
-              include: [
-                {
-                  model: Warehouse
-                }
-              ]
+              model: Warehouse
             }
           ]
         }
@@ -36,3 +26,37 @@ exports.getMainAdminById = async (req, res, next) => {
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+exports.getTaskAdminByIdAndBody = async (req, res, next) => {
+  try {
+    const mainAdmin = await Task.findAll({
+      include: [
+        {
+          model: Items,
+          include: [
+            {
+              model: Shelf,
+              include: [
+                {
+                  model: Warehouse
+                }
+              ]
+            }
+          ],
+          include: [
+            {
+              model: Invoice
+            }
+          ]
+        }
+      ]
+    });
+    if (!mainAdmin) {
+      createError("mainAdmin not found", 400);
+    }
+
+    res.status(200).json({ mainAdmin });
+  } catch (err) {
+    next(err);
+  }
+};

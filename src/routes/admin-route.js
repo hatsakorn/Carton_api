@@ -4,6 +4,7 @@ const upload = require("../middlewares/upload");
 
 const router = express.Router();
 
-router.get("/:employeeId", customerController.getMainAdminById);
+router.get("/", customerController.getMainAdmin);
+router.get("/task/", customerController.getTaskAdminByIdAndBody);
 
 module.exports = router;
