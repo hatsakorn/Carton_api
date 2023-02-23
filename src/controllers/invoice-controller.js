@@ -69,9 +69,7 @@ exports.Omise = async( req, res, next) => {
           currency: "thb",
           customer: customer.id
       });
-
-      console.log(res)
-      return res.status(200).json({message: "omise payment success"})
+      return res.status(201).json({charge})
 
   } catch (err) {
       console.log(err)
