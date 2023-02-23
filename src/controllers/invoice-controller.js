@@ -10,7 +10,7 @@ exports.getInvoiceById = async (req, res, next) => {
       }
     });
     if (!myInvoice) {
-      createError("mainAdmin not found", 400);
+      createError("myInvoice not found", 400);
     }
 
     res.status(200).json({ myInvoice });
