@@ -34,3 +34,18 @@ exports.CreateInvoice = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.GetInvoiceByUserId = async (req,res,next) => {
+  try {
+    const userId = req.user.id
+    const invoice = await Invoice.findAll({
+      where: {
+        customerId : userId
+      }
+    })
+    if (!invoice) return res.status(400).json('fetched failed')
+    return res.status(200).json({invoice})
+  }catch (err){
+    next(err);
+  }
+}
