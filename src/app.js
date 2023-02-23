@@ -6,11 +6,9 @@ const errorMiddleware = require("./middlewares/error");
 const packageRoute = require("./routes/package-route");
 const authRoute = require("./routes/auth-route");
 const customerRoute = require("./routes/customer-route");
-<<<<<<< HEAD
 const adminRoute = require("./routes/admin-route");
-=======
 const warehouseRoute = require("./routes/warehouse-route");
->>>>>>> develop
+const invoiceRoute = require("./routes/invoice-route");
 
 const express = require("express");
 const cors = require("cors");
@@ -25,11 +23,9 @@ app.use(express.json());
 app.use("/package", packageRoute);
 app.use("/auth", authRoute);
 app.use("/customer", customerRoute);
-<<<<<<< HEAD
 app.use("/admin", adminRoute);
-=======
+app.use("/invoice", invoiceRoute);
 app.use("/warehouse", warehouseRoute);
->>>>>>> develop
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

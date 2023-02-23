@@ -83,21 +83,28 @@ exports.getTaskAdmin = async (req, res, next) => {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 exports.createTask = async (req, res, next) => {
-  console.log("+++++++++++++++++++++++++++++++");
-  console.log(req.body);
-  console.log("+++++++++++++++++++++++++++++++");
+  // console.log("+++++++++++++++++++++++++++++++");
+  // console.log(req.body);
+  // console.log("+++++++++++++++++++++++++++++++");
   try {
-    const { task, employeeId, itemId, shelf } = req.body;
+    const { employeeId, itemId, shelf } = req.body;
+    // console.log("+++++++++++++++++++++++++++++++");
+    // console.log(shelf);
+    // console.log("+++++++++++++++++++++++++++++++");
+    // console.log("--------------------------");
+    // console.log(itemId);
+    // console.log("-----------------------------");
     const newtask = await Task.findOne({
       where: {
         itemId: itemId
       }
     });
     if (newtask) {
-      createError("Item is in progress", 400);
+      createError("This item is already in the shelf.", 400);
     }
 
     const status = "ASSIGN";
+    const task = "ไปเก็บของซะ";
 
     const createtask = await Task.create({
       task: task,
@@ -106,9 +113,18 @@ exports.createTask = async (req, res, next) => {
       itemId: itemId
     });
 
-    await Items.update(shelf, { where: { shelfId: shelf } });
+    await Items.update(
+      { shelfId: shelf },
 
-    res.status(200).json({ mes: "112" });
+      { where: { Id: itemId } }
+    );
+    await Shelf.update(
+      { isAvailable: "1" },
+
+      { where: { Id: shelf } }
+    );
+
+    res.status(200).json({ mes: "success" });
   } catch (err) {
     next(err);
   }
