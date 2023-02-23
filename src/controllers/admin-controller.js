@@ -94,7 +94,7 @@ exports.createTask = async (req, res, next) => {
       }
     });
     if (newtask) {
-      createError("testtttt", 400);
+      createError("Item is in progress", 400);
     }
 
     const status = "ASSIGN";
@@ -105,6 +105,8 @@ exports.createTask = async (req, res, next) => {
       employeeId: employeeId,
       itemId: itemId
     });
+
+    await Items.update(shelf, { where: { shelfId: shelf } });
 
     res.status(200).json({ mes: "112" });
   } catch (err) {
