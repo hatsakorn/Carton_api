@@ -44,14 +44,14 @@ const customerRegisterSchema = Joi.object({
     "string.empty": "lastName is required"
   }),
   confirmPassword: Joi.string()
-  .valid(Joi.ref('password'))
-  .required()
-  .trim()
-  .messages({
-    'any.only': 'password and confirm password did not match',
-    'string.empty': 'confirm password is required'
-  })
-  .strip()
+    .valid(Joi.ref("password"))
+    .required()
+    .trim()
+    .messages({
+      "any.only": "password and confirm password did not match",
+      "string.empty": "confirm password is required"
+    })
+    .strip()
 });
 
 exports.customerValidateRegister = validate(customerRegisterSchema);
@@ -93,14 +93,14 @@ const employeeRegisterSchema = Joi.object({
     "string.base": "user name must be a string"
   }),
   confirmPassword: Joi.string()
-  .valid(Joi.ref('password'))
-  .required()
-  .trim()
-  .messages({
-    'any.only': 'password and confirm password did not match',
-    'string.empty': 'confirm password is required'
-  })
-  .strip()
+    .valid(Joi.ref("password"))
+    .required()
+    .trim()
+    .messages({
+      "any.only": "password and confirm password did not match",
+      "string.empty": "confirm password is required"
+    })
+    .strip()
 });
 
 exports.employeeValidateRegister = validate(employeeRegisterSchema);

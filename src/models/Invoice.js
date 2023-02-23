@@ -9,13 +9,7 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true
         }
       },
-      transactionId: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: true
-        }
-      }
+      transactionId: DataTypes.STRING
     },
     { underscored: true, timestamps: false }
   );

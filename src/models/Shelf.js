@@ -17,8 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   Shelf.associate = (db) => {
     Shelf.hasMany(db.Items, {
       foreignKey: {
-        name: "shelfId",
-        allowNull: false
+        name: "shelfId"
       },
       onDelete: "RESTRICT"
     });

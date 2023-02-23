@@ -10,33 +10,21 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
       contractStartDate: {
-        type: DataTypes.STRING,
+        type: DataTypes.DATE,
         allowNull: true,
         validate: {
           notEmpty: true
         }
       },
       contractEndDate: {
-        type: DataTypes.STRING,
+        type: DataTypes.DATE,
         allowNull: true,
         validate: {
           notEmpty: true
         }
       },
-      dateIn: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: true
-        }
-      },
-      dateOut: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: true
-        }
-      }
+      dateIn: DataTypes.DATE,
+      dateOut: DataTypes.DATE
     },
     { underscored: true, timestamps: false }
   );
@@ -60,8 +48,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Items.belongsTo(db.Shelf, {
       foreignKey: {
-        name: "shelfId",
-        allowNull: false
+        name: "shelfId"
       },
       onDelete: "RESTRICT"
     });
