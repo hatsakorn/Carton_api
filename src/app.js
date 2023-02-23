@@ -7,6 +7,7 @@ const packageRoute = require("./routes/package-route");
 const authRoute = require("./routes/auth-route");
 const customerRoute = require("./routes/customer-route");
 const invoiceRoute = require("./routes/invoice-route");
+const warehouseRoute = require("./routes/warehouse-route");
 
 const express = require("express");
 const cors = require("cors");
@@ -22,6 +23,7 @@ app.use("/package", packageRoute);
 app.use("/auth", authRoute);
 app.use("/customer", customerRoute);
 app.use("/invoice", invoiceRoute);
+app.use("/warehouse", warehouseRoute);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
