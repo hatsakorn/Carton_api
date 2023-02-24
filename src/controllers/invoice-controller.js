@@ -53,6 +53,7 @@ exports.GetInvoiceByUserId = async (req,res,next) => {
 
 exports.Omise = async( req, res, next) => {
   const { email, name, amount, token } = req.body 
+  const invoiceId = req.params
   const omise = require('omise')({
     'publicKey': process.env.OMISE_PUBLIC_KEY,
     'secretKey': process.env.OMISE_SECRET_KEY
@@ -69,7 +70,16 @@ exports.Omise = async( req, res, next) => {
           currency: "thb",
           customer: customer.id
       });
-      return res.status(201).json({charge})
+
+      //import charge.id to database as transcationId
+      const transactionId = charge.id
+      const invoice = await Invoice.update({ 
+        transactionId : transactionId
+      },{
+        where : { id : invoiceId }
+      })
+      if (!invoice) return res.status(400).json('fetched failed')
+      return res.status(201).json({message : 'transaction complete'})
 
   } catch (err) {
       console.log(err)
