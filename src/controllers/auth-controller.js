@@ -42,7 +42,7 @@ exports.login = async (req, res, next) => {
     if (customer) {
       const isCorrect = await bcrypt.compare(password, customer.password);
 
-      console.log(customer.password);
+      // console.log(customer.password);
 
       if (!isCorrect) {
         createError("invalid username or password");
@@ -109,7 +109,7 @@ exports.login = async (req, res, next) => {
         }
       );
     }
-    console.log(accessToken);
+    // console.log(accessToken);
     res.status(200).json({ accessToken });
   } catch (err) {
     next(err);
@@ -147,7 +147,7 @@ exports.customerRegister = async (req, res, next) => {
       createError("username or email is already in use", 400);
     }
 
-    console.log(customer);
+    // console.log(customer);
     // if (customer === employee) {
     //   createError("username or email is already in use", 400);
     // }
