@@ -4,10 +4,10 @@ const upload = require("../middlewares/upload");
 
 const router = express.Router();
 
-router.get("/", adminController.getMainAdmin);
-router.get("/task/", adminController.getTaskAdmin);
+router.get("/", adminController.getAllAdmin);
+router.get("/items/", adminController.getItemsAdmin);
+router.get("/items/nullShelf", adminController.getItemsNullShelf);
 router.post("/createTask", adminController.createTask);
-
-// router.post("/assignTask", adminController.postAssignTask);
+router.post("/:taskId", adminController.updateTask);
 
 module.exports = router;
