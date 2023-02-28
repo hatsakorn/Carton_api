@@ -8,6 +8,6 @@ router.get("/", adminController.getAllAdmin);
 router.get("/items/", adminController.getItemsAdmin);
 router.get("/items/nullShelf", adminController.getItemsNullShelf);
 router.post("/createTask", adminController.createTask);
-router.post("/:taskId", adminController.updateTask);
+router.patch("/:taskId", adminController.updateTask);
 
 module.exports = router;

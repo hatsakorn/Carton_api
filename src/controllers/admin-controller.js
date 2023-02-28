@@ -109,7 +109,27 @@ exports.updateTask = async (req, res, next) => {
       { where: { Id: taskId } }
     );
 
-    res.status(200).json({ mes: "updateTask success" });
+    if (status === "COMPLETE") {
+      const task = await Task.findOne({
+        where: {
+          Id: taskId
+        }
+      });
+
+      const item = await Items.findOne({
+        where: {
+          Id: task.itemId
+        }
+      });
+
+      await Shelf.update(
+        { isAvailable: "0" },
+
+        { where: { Id: item.shelfId } }
+      );
+    }
+
+    res.status(200).json({ mes: "update success" });
   } catch (err) {
     next(err);
   }
@@ -132,3 +152,5 @@ exports.getItemsNullShelf = async (req, res, next) => {
     next(err);
   }
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////
