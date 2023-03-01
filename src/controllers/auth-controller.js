@@ -23,7 +23,7 @@ exports.login = async (req, res, next) => {
     const employee = await Employee.findOne({
       where: {
         username: username,
-        role: "EMPLOYEE"
+        role: USER_EMPLOYEE
       }
     });
 
