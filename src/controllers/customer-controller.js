@@ -1,7 +1,7 @@
 const { Invoice, Items, Shelf, Warehouse } = require("../models");
 const createError = require("../utils/create-error");
 
-exports.getMainCustomerById = async (req, res, next) => {
+exports.getMainCustomer = async (req, res, next) => {
   try {
     const { customerId } = req.params;
 
