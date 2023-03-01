@@ -4,12 +4,24 @@ const {
   Shelf,
   Warehouse,
   Invoice,
-  Customer
+  Customer,
+  Employee
 } = require("../models");
 const createError = require("../utils/create-error");
 
 exports.getAllAdmin = async (req, res, next) => {
+  console.log(
+    "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+  );
+  console.log(req.user.role);
+  console.log(
+    "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+  );
+
   try {
+    if (req.user.role !== "ADMIN") {
+      createError("you are not admin", 400);
+    }
     const mainAdmin = await Items.findAll({
       include: [
         {
@@ -72,7 +84,7 @@ exports.createTask = async (req, res, next) => {
       createError("This item is already in the shelf.", 400);
     }
 
-    const createtask = await Task.create({
+    await Task.create({
       task: task,
       status: status,
       employeeId: employeeId,
@@ -137,13 +149,6 @@ exports.updateTask = async (req, res, next) => {
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 exports.getItemsNullShelf = async (req, res, next) => {
-  console.log(
-    "+++++++++++++++++++++++++*****************************+++++++++++++++++++++++++++++++++"
-  );
-  console.log(req.user);
-  console.log(
-    "++++++++++++++++*************************************+++++++++++++++++++++++++++++"
-  );
   try {
     const ItemsNullShelf = await Items.findAll({
       where: {
@@ -161,3 +166,32 @@ exports.getItemsNullShelf = async (req, res, next) => {
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////
+
+exports.getEmployee = async (req, res, next) => {
+  try {
+    const employee = await Employee.findAll({});
+    res.status(201).json({ employee });
+  } catch (err) {
+    next(err);
+  }
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+exports.getTaskEmployee = async (req, res, next) => {
+  try {
+    const taskemployee = await Task.findAll({
+      where: {
+        employeeId: req.user.id
+      }
+    });
+
+    // if (!taskemployee) {
+    //   createError("taskemployee not found", 400);
+    // }
+
+    res.status(200).json({ taskemployee });
+  } catch (err) {
+    next(err);
+  }
+};

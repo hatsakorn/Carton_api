@@ -2,12 +2,16 @@ const { Invoice, Items, Shelf, Warehouse } = require("../models");
 const createError = require("../utils/create-error");
 
 exports.getMainCustomer = async (req, res, next) => {
+  // // console.log("++++++++++++++++++++++++++++++++++++++++++++++++++");
+  // console.log(req.user.constructor.name === "Customer" ? "y" : "n");
+  // // console.log("++++++++++++++++++++++++++++++++++++++++++++++++++");
+  // if (!req.user.constructor.name === "Customer") {
+  //   createError("you are not admin", 400);
+  // }
   try {
-    const { customerId } = req.params;
-
     const mainCustomer = await Invoice.findAll({
       where: {
-        customerId: customerId
+        customerId: req.user.id
       },
       include: [
         {

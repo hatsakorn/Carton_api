@@ -31,7 +31,7 @@ exports.postPackage = async (req, res, next) => {
     const endDate = { endDate: req.body.endDate };
     const { posterUrl } = req.files;
     // console.log("*******************************");
-    console.log(posterUrl);
+
     // console.log("*******************************");
     const posterUrlPublicId = posterUrl[0].path
       ? cloudinary.getPublicId(posterUrl[0].path)

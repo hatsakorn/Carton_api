@@ -3,10 +3,9 @@ const createError = require("../utils/create-error");
 
 exports.getInvoiceById = async (req, res, next) => {
   try {
-    const { customerId } = req.params;
     const myInvoice = await Invoice.findAll({
       where: {
-        customerId: customerId
+        customerId: req.user.id
       }
     });
     if (!myInvoice) {
