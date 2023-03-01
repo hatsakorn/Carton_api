@@ -137,6 +137,13 @@ exports.updateTask = async (req, res, next) => {
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 exports.getItemsNullShelf = async (req, res, next) => {
+  console.log(
+    "+++++++++++++++++++++++++*****************************+++++++++++++++++++++++++++++++++"
+  );
+  console.log(req.user);
+  console.log(
+    "++++++++++++++++*************************************+++++++++++++++++++++++++++++"
+  );
   try {
     const ItemsNullShelf = await Items.findAll({
       where: {
