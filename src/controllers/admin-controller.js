@@ -110,7 +110,7 @@ exports.createTask = async (req, res, next) => {
 
 exports.updateTask = async (req, res, next) => {
   try {
-    if (req.user.role !== "ADMIN" || "EMPLOYEE") {
+    if (!req.user.role) {
       createError("you are not admin", 400);
     }
     const { taskId } = req.params;
