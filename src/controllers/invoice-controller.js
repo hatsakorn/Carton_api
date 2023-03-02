@@ -70,58 +70,42 @@ exports.GetInvoiceByUserId = async (req,res,next) => {
   }
 }
 
-const omise = require('omise')({
-  publicKey: process.env.OMISE_PUBLIC_KEY,
-  secretKey: process.env.OMISE_SECRET_KEY
+exports.Omise = async( req, res, next) => {
+  const { email, name, amount, token, invoiceId } = req.body 
+  const omise = require('omise')({
+    'publicKey': process.env.OMISE_PUBLIC_KEY,
+    'secretKey': process.env.OMISE_SECRET_KEY
 });
-
-exports.Omise = async (req, res, next) => {
-  const { email, name, amount, token, invoiceId } = req.body;
-
   try {
-    const customer = await omise.customers.create({
-      email,
-      description: name,
-      card: token
-    });
+      const customer = await omise.customers.create({
+          email,
+          description: name,
+          card: token
+      });
 
-    const charge = await omise.charges.create({
-      amount: amount,
-      currency: "thb",
-      customer: customer.id
-    });
+      const charge = await omise.charges.create({
+          amount: amount,
+          currency: "thb",
+          customer: customer.id
+      });
 
-    // Import charge.id to database as transactionId
-    const transactionId = charge.id;
-
-    const [updatedCount, updatedInvoices] = await Invoice.update(
-      { 
-        transactionId: transactionId,
-        status: 'PAID'
-      },
-      {
-        where: { id: invoiceId },
-        returning: true // This option will return the updated rows from the database
-      }
-    );
-
-    if (updatedCount === 0) {
-      return res.status(400).json({ message: 'Update failed' });
-    }
-
-    const updatedInvoice = updatedInvoices[0];
-
-    return res.status(201).json({
-      message: 'Transaction complete',
-      transactionId: updatedInvoice.transactionId,
-      status: updatedInvoice.status
-    });
+      //import charge.id to database as transcationId
+      const transactionId = charge.id
+      const invoice = await Invoice.update({ 
+        transactionId : transactionId,
+        status : 'PAID'
+      },{
+        where : { id : invoiceId }
+      })
+      if (!invoice) return res.status(400).json('fetched failed')
+      return res.status(201).json({message : 'transaction complete'})
 
   } catch (err) {
-    console.error(err);
-    next(err);
+      console.log(err)
+      next(err)
   }
-};
+}
+
 
 
 exports.getAllInvoiceByAdmin = async (req, res, next) => {
