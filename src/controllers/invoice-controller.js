@@ -72,8 +72,7 @@ exports.GetInvoiceByUserId = async (req,res,next) => {
 
 
 exports.Omise = async( req, res, next) => {
-  const { email, name, amount, token } = req.body 
-  const invoiceId = req.params
+  const { email, name, amount, token, invoiceId } = req.body 
   const omise = require('omise')({
     'publicKey': process.env.OMISE_PUBLIC_KEY,
     'secretKey': process.env.OMISE_SECRET_KEY

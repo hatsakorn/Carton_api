@@ -8,7 +8,6 @@ const customerRoute = require("./routes/customer-route");
 const adminRoute = require("./routes/admin-route");
 const invoiceRoute = require("./routes/invoice-route");
 const warehouseRoute = require("./routes/warehouse-route");
-const invoiceRoute = require("./routes/invoice-route");
 
 const express = require("express");
 const cors = require("cors");
