@@ -21,3 +21,25 @@ exports.getAvailShelf = async (req, res, next) => {
     next(err);
   }
 };
+
+////////////////////////////////////////////////////////////////////////////
+
+exports.getItemsByWarehouseId = async (req, res, next) => {
+  try {
+    const { warehouseId } = req.params;
+    const item = await Shelf.findAll({
+      where: {
+        warehouseId: warehouseId
+      },
+      include: [
+        {
+          model: Items
+        }
+      ]
+    });
+
+    res.status(200).json(item);
+  } catch (err) {
+    next(err);
+  }
+};

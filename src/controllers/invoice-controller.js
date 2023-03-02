@@ -1,35 +1,55 @@
 const { Invoice, Items } = require("../models");
+const createError = require("../utils/create-error");
 exports.CreateInvoice = async (req, res, next) => {
   try {
-    const value = req.body;
-    const customerId = req.user.id;
-    const newInvoice = await Invoice.create({
-      customerId,
-      status: "PENDING"
-    });
-    if (!newInvoice)
-      return res.status(400).json({ error: "Falied to create invoice" });
-    try {
-      const itemsData = value.map((obj) => {
-        return {
-          invoiceId: newInvoice.id,
-          details: obj.details,
-          contractStartDate: obj.contractStartDate,
-          contractEndDate: obj.contractEndDate,
-          packageId: obj.packageId
-        };
-      });
-      console.log(itemsData);
-      const items = await Items.bulkCreate(itemsData);
-      if (items.length === 0) {
-        await newInvoice.destroy();
-        return res.status(400).json({ error: "No items in invoice" });
+        const value = req.body;
+        const customerId = req.user.id;
+        const newInvoice = await Invoice.create({
+          customerId,
+          status: "PENDING"
+        });
+        if (!newInvoice)
+          return res.status(400).json({ error: "Falied to create invoice" });
+        try {
+            const itemsData = value.map((obj) => {
+              return {
+                      invoiceId: newInvoice.id,
+                      details: obj.details,
+                      contractStartDate: obj.contractStartDate,
+                      contractEndDate: obj.contractEndDate,
+                      packageId: obj.packageId
+                   };
+              });
+            console.log(itemsData);
+            const items = await Items.bulkCreate(itemsData);
+            if (items.length === 0) {
+                await newInvoice.destroy();
+                return res.status(400).json({ error: "No items in invoice" });
+            }
+          } catch (err) {
+              await newInvoice.destroy();
+              return res.status(400).json({ error: "Failed to create items" });
+          }
+        res.status(200).json({ message: "Invoice has been created" });}
+        catch(err){
+          next(err);
+        }
+};
+
+
+exports.getInvoiceById = async (req, res, next) => {
+  try {
+    const { customerId } = req.params;
+    const myInvoice = await Invoice.findAll({
+      where: {
+        customerId: customerId
       }
-    } catch (err) {
-      await newInvoice.destroy();
-      return res.status(400).json({ error: "Failed to create items" });
+    });
+    if (!myInvoice) {
+      createError("myInvoice not found", 400);
     }
-    res.status(201).json({ message: "Invoice has been created" });
+
+    res.status(200).json({ myInvoice });
   } catch (err) {
     next(err);
   }
@@ -84,5 +104,24 @@ exports.Omise = async( req, res, next) => {
   } catch (err) {
       console.log(err)
       next(err)
+  }
+}
+
+exports.getAllInvoiceByAdmin = async (req, res, next) => {
+  try {
+    const invoice = await Invoice.findAll({
+      include: [
+        {
+          model: Items
+        }
+      ]
+    });
+    if (!invoice) {
+      createError("invoice not found", 400);
+    }
+
+    res.status(200).json({ invoice });
+  } catch (err) {
+    next(err);
   }
 }

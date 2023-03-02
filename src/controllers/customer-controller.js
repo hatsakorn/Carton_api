@@ -1,7 +1,7 @@
 const { Invoice, Items, Shelf, Warehouse } = require("../models");
 const createError = require("../utils/create-error");
 
-exports.getMainCustomerById = async (req, res, next) => {
+exports.getMainCustomer = async (req, res, next) => {
   try {
     const { customerId } = req.params;
 
@@ -29,7 +29,7 @@ exports.getMainCustomerById = async (req, res, next) => {
       createError("mainPackage not found", 400);
     }
 
-    res.status(200).json({ mainCustomer });
+    res.status(200).json(mainCustomer);
   } catch (err) {
     next(err);
   }
