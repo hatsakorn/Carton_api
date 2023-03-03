@@ -11,9 +11,9 @@ const createError = require("../utils/create-error");
 
 exports.getAllAdmin = async (req, res, next) => {
   try {
-    if (req.user.role !== "ADMIN") {
-      createError("you are not admin", 400);
-    }
+    // if (req.user.role !== "ADMIN") {
+    //   createError("you are not admin", 400);
+    // }
     const mainAdmin = await Items.findAll({
       include: [
         {
@@ -40,9 +40,9 @@ exports.getAllAdmin = async (req, res, next) => {
 
 exports.getItemsAdmin = async (req, res, next) => {
   try {
-    if (req.user.role !== "ADMIN") {
-      createError("you are not admin", 400);
-    }
+    // if (req.user.role !== "ADMIN") {
+    //   createError("you are not admin", 400);
+    // }
     const mainAdmin = await Items.findAll({
       include: [
         {
@@ -68,9 +68,9 @@ exports.getItemsAdmin = async (req, res, next) => {
 
 exports.createTask = async (req, res, next) => {
   try {
-    if (req.user.role !== "ADMIN") {
-      createError("you are not admin", 400);
-    }
+    // if (req.user.role !== "ADMIN") {
+    //   createError("you are not admin", 400);
+    // }
     const { employeeId, itemId, shelf, status, task } = req.body;
 
     const newtask = await Task.findOne({
@@ -110,9 +110,9 @@ exports.createTask = async (req, res, next) => {
 
 exports.updateTask = async (req, res, next) => {
   try {
-    if (!req.user.role) {
-      createError("you are not admin", 400);
-    }
+    // if (!req.user.role) {
+    //   createError("you are not admin", 400);
+    // }
     const { taskId } = req.params;
     const { status, task, employeeId } = req.body;
 
@@ -151,9 +151,9 @@ exports.updateTask = async (req, res, next) => {
 
 exports.getItemsNullShelf = async (req, res, next) => {
   try {
-    if (req.user.role !== "ADMIN") {
-      createError("you are not admin", 400);
-    }
+    // if (req.user.role !== "ADMIN") {
+    //   createError("you are not admin", 400);
+    // }
     const ItemsNullShelf = await Items.findAll({
       where: {
         shelfId: null
@@ -173,9 +173,10 @@ exports.getItemsNullShelf = async (req, res, next) => {
 
 exports.getEmployee = async (req, res, next) => {
   try {
-    if (req.user.role !== "EMPLOYEE") {
-      createError("you are not admin", 400);
-    }
+    console.log(req.user.role);
+    // if (req.user.role !== "ADMIN") {
+    //   createError("you are not admin", 400);
+    // }
     const employee = await Employee.findAll({});
     res.status(201).json({ employee });
   } catch (err) {
@@ -187,9 +188,9 @@ exports.getEmployee = async (req, res, next) => {
 
 exports.getTaskEmployee = async (req, res, next) => {
   try {
-    if (req.user.role !== "EMPLOYEE") {
-      createError("you are not admin", 400);
-    }
+    // if (req.user.role !== "EMPLOYEE") {
+    //   createError("you are not admin", 400);
+    // }
     const taskemployee = await Task.findAll({
       where: {
         employeeId: req.user.id

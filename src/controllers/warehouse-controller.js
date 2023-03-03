@@ -3,9 +3,9 @@ const createError = require("../utils/create-error");
 
 exports.getAvailShelf = async (req, res, next) => {
   try {
-    if (!req.user.role) {
-      createError("you are not admin", 400);
-    }
+    // if (!req.user.role) {
+    //   createError("you are not admin", 400);
+    // }
     const availShelf = await Warehouse.findAll({
       include: [
         {
@@ -29,9 +29,9 @@ exports.getAvailShelf = async (req, res, next) => {
 
 exports.getItemsByWarehouseId = async (req, res, next) => {
   try {
-    if (!req.user.role) {
-      createError("you are not admin", 400);
-    }
+    // if (!req.user.role) {
+    //   createError("you are not admin", 400);
+    // }
     const { warehouseId } = req.params;
     const item = await Shelf.findAll({
       where: {
