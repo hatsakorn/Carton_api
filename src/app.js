@@ -1,15 +1,14 @@
 require("./config/passport");
 require("dotenv");
-
 const notFoundMiddleware = require("./middlewares/not-found");
 const errorMiddleware = require("./middlewares/error");
 const packageRoute = require("./routes/package-route");
 const authRoute = require("./routes/auth-route");
 const customerRoute = require("./routes/customer-route");
 const adminRoute = require("./routes/admin-route");
-const warehouseRoute = require("./routes/warehouse-route");
 const invoiceRoute = require("./routes/invoice-route");
 const passportAuthentication = require("./middlewares/passportAuthentication");
+const warehouseRoute = require("./routes/warehouse-route");
 
 const express = require("express");
 const cors = require("cors");
