@@ -9,5 +9,7 @@ router.get("/items/", adminController.getItemsAdmin);
 router.get("/items/nullShelf", adminController.getItemsNullShelf);
 router.post("/createTask", adminController.createTask);
 router.patch("/:taskId", adminController.updateTask);
+router.get("/employee", adminController.getEmployee);
+router.get("/employee/task", adminController.getTaskEmployee);
 
 module.exports = router;
