@@ -5,9 +5,6 @@ const cloudinary = require("../utils/cloudinary");
 
 exports.getAllPackage = async (req, res, next) => {
   try {
-    if (req.user.role !== "ADMIN") {
-      createError("you are not admin", 400);
-    }
     const allPackage = await Package.findAll();
     if (!allPackage) {
       createError("package not found", 400);
@@ -22,11 +19,8 @@ exports.getAllPackage = async (req, res, next) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 exports.postPackage = async (req, res, next) => {
-  // console.log("++++++++++++++++++++++++++++++++");
-  // console.log(req);
-  // console.log("+++++++++++++++++++++++++++");
   try {
-    if (req.user.role !== "ADMIN") {
+    if (!req.user.role) {
       createError("you are not admin", 400);
     }
     const title = { title: req.body.title };
@@ -80,7 +74,7 @@ exports.postPackage = async (req, res, next) => {
 
 exports.patchStatusPackage = async (req, res, next) => {
   try {
-    if (req.user.role !== "ADMIN") {
+    if (!req.user.role) {
       createError("you are not admin", 400);
     }
     const { packageId } = req.params;

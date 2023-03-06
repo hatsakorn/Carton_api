@@ -11,7 +11,7 @@ const createError = require("../utils/create-error");
 
 exports.getAllAdmin = async (req, res, next) => {
   try {
-    if (req.user.role !== "ADMIN") {
+    if (req.user.role !== "ADMIN" || "EMPLOYEE") {
       createError("you are not admin", 400);
     }
     const mainAdmin = await Items.findAll({
@@ -40,7 +40,7 @@ exports.getAllAdmin = async (req, res, next) => {
 
 exports.getItemsAdmin = async (req, res, next) => {
   try {
-    if (req.user.role !== "ADMIN") {
+    if (req.user.role !== "ADMIN" || "EMPLOYEE") {
       createError("you are not admin", 400);
     }
     const mainAdmin = await Items.findAll({
@@ -68,7 +68,7 @@ exports.getItemsAdmin = async (req, res, next) => {
 
 exports.createTask = async (req, res, next) => {
   try {
-    if (req.user.role !== "ADMIN") {
+    if (req.user.role !== "ADMIN" || "EMPLOYEE") {
       createError("you are not admin", 400);
     }
     const { employeeId, itemId, shelf, status, task } = req.body;
@@ -151,7 +151,7 @@ exports.updateTask = async (req, res, next) => {
 
 exports.getItemsNullShelf = async (req, res, next) => {
   try {
-    if (req.user.role !== "ADMIN") {
+    if (!req.user.role) {
       createError("you are not admin", 400);
     }
     const ItemsNullShelf = await Items.findAll({
@@ -173,7 +173,7 @@ exports.getItemsNullShelf = async (req, res, next) => {
 
 exports.getEmployee = async (req, res, next) => {
   try {
-    if (req.user.role !== "EMPLOYEE") {
+    if (!req.user.role) {
       createError("you are not admin", 400);
     }
     const employee = await Employee.findAll({});
@@ -187,7 +187,7 @@ exports.getEmployee = async (req, res, next) => {
 
 exports.getTaskEmployee = async (req, res, next) => {
   try {
-    if (req.user.role !== "EMPLOYEE") {
+    if (!req.user.role) {
       createError("you are not admin", 400);
     }
     const taskemployee = await Task.findAll({
@@ -195,10 +195,6 @@ exports.getTaskEmployee = async (req, res, next) => {
         employeeId: req.user.id
       }
     });
-
-    // if (!taskemployee) {
-    //   createError("taskemployee not found", 400);
-    // }
 
     res.status(200).json({ taskemployee });
   } catch (err) {
