@@ -11,7 +11,7 @@ const createError = require("../utils/create-error");
 
 exports.getAllAdmin = async (req, res, next) => {
   try {
-    if (req.user.role !== "ADMIN" || "EMPLOYEE") {
+    if (req.user.role !== "ADMIN" && "EMPLOYEE") {
       createError("you are not admin", 400);
     }
     const mainAdmin = await Items.findAll({
@@ -40,7 +40,7 @@ exports.getAllAdmin = async (req, res, next) => {
 
 exports.getItemsAdmin = async (req, res, next) => {
   try {
-    if (req.user.role !== "ADMIN" || "EMPLOYEE") {
+    if (req.user.role !== "ADMIN" && "EMPLOYEE") {
       createError("you are not admin", 400);
     }
     const mainAdmin = await Items.findAll({
