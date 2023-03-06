@@ -20,7 +20,7 @@ exports.getAllPackage = async (req, res, next) => {
 
 exports.postPackage = async (req, res, next) => {
   // console.log("++++++++++++++++++++++++++++++++");
-  // console.log(req);
+  console.log(req.user);
   // console.log("+++++++++++++++++++++++++++");
   try {
     // if (req.user.role !== "ADMIN") {
@@ -36,32 +36,34 @@ exports.postPackage = async (req, res, next) => {
     // console.log("*******************************");
 
     // console.log("*******************************");
-    const posterUrlPublicId = posterUrl[0].path
-      ? cloudinary.getPublicId(posterUrl[0].path)
-      : null;
+    let posterUrl2;
+    if (posterUrl) {
+      const posterUrlPublicId = posterUrl[0].path
+        ? cloudinary.getPublicId(posterUrl[0].path)
+        : null;
 
-    const postpackage = await Package.findOne({
-      where: {
-        title: title.title
+      const postpackage = await Package.findOne({
+        where: {
+          title: title.title
+        }
+      });
+      if (postpackage) {
+        createError("package  is already in use", 400);
       }
-    });
-    if (postpackage) {
-      createError("package  is already in use", 400);
+
+      posterUrl2 = await cloudinary.upload(
+        posterUrl[0].path,
+        posterUrlPublicId
+      );
     }
-
-    const posterUrl2 = await cloudinary.upload(
-      posterUrl[0].path,
-      posterUrlPublicId
-    );
-
-    const createpackage = await Package.create({
+    await Package.create({
       title: title.title,
       description: description.description,
       price: price.price,
       isActive: isActive.isActive,
       startDate: startDate.startDate,
       endDate: endDate.endDate,
-      posterUrl: posterUrl2
+      posterUrl: posterUrl2 || null
     });
 
     res.status(201).json({ message: "postPackage success. " });
