@@ -68,7 +68,7 @@ exports.getItemsAdmin = async (req, res, next) => {
 
 exports.createTask = async (req, res, next) => {
   try {
-    if (req.user.role !== "ADMIN" || "EMPLOYEE") {
+    if (req.user.role !== "ADMIN" && "EMPLOYEE") {
       createError("you are not admin", 400);
     }
     const { employeeId, itemId, shelf, status, task } = req.body;
@@ -122,6 +122,30 @@ exports.updateTask = async (req, res, next) => {
       { where: { Id: taskId } }
     );
 
+    //------------------------  REJECT --------------------//
+
+    if (status === "REJECT") {
+      const task = await Task.findOne({
+        where: {
+          Id: taskId
+        }
+      });
+
+      const item = await Items.findOne({
+        where: {
+          Id: task.itemId
+        }
+      });
+      await Items.update({ shelfId: null }, { where: { Id: task.itemId } });
+
+      await Shelf.update(
+        { isAvailable: "0" },
+
+        { where: { Id: item.shelfId } }
+      );
+    }
+
+    //------------------------  COMPLETE --------------------//
     if (status === "COMPLETE") {
       const task = await Task.findOne({
         where: {
