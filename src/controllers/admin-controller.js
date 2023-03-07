@@ -206,3 +206,40 @@ exports.getTaskEmployee = async (req, res, next) => {
     next(err);
   }
 };
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+exports.updateTaskbyQrCode = async (req, res, next) => {
+  const employeeId = req.user.id
+  const {status,itemId} = req.body;
+  Items.findByPk(itemId, {
+    include: [
+      {
+        model: Task,
+        attributes: ['id', 'status'],
+        where : { employeeId: employeeId }
+      },
+      {
+        model: Invoice,
+        attributes: ['id', 'status']
+      }
+    ]
+  })
+  .then(item => {
+    if (item) {
+      item.Task.forEach(task => {
+        task.status = status;
+        task.save();
+      });
+      item.Invoice.status = status;
+      item.invoice.save();
+      console.log('Status updated successfully');
+    } else {
+      console.log('Item not found');
+    }
+  })
+  .catch(error => {
+    console.log(error);
+  });
+};
