@@ -235,16 +235,16 @@ exports.deleteEmployeeById = async (req, res, next) => {
       createError("you are not admin", 400);
     }
 
-    const employee = await Manga.destroy({
+    const employee = await Employee.destroy({
       where: {
         id: employeeId
       }
     });
     if (!employee) {
-      createError("manga not found", 400);
+      createError("Employee not found", 400);
     }
 
-    res.status(200).json({ message: "deleteManga success. " });
+    res.status(200).json({ message: "deleteEmployee success. " });
   } catch (err) {
     next(err);
   }
