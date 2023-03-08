@@ -225,3 +225,27 @@ exports.getTaskEmployee = async (req, res, next) => {
     next(err);
   }
 };
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+exports.deleteEmployeeById = async (req, res, next) => {
+  try {
+    const { employeeId } = req.params;
+    if (!req.user.role) {
+      createError("you are not admin", 400);
+    }
+
+    const employee = await Manga.destroy({
+      where: {
+        id: employeeId
+      }
+    });
+    if (!employee) {
+      createError("manga not found", 400);
+    }
+
+    res.status(200).json({ message: "deleteManga success. " });
+  } catch (err) {
+    next(err);
+  }
+};
