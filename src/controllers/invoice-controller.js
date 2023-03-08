@@ -1,5 +1,6 @@
-const { Invoice, Items } = require("../models");
+const { Invoice, Items,Customer,Shelf,Warehouse } = require("../models");
 const createError = require("../utils/create-error");
+const Sequelize = require('sequelize');
 exports.CreateInvoice = async (req, res, next) => {
   try {
         const value = req.body;
@@ -126,5 +127,51 @@ exports.getAllInvoiceByAdmin = async (req, res, next) => {
     res.status(200).json({ invoice });
   } catch (err) {
     next(err);
+  }
+}
+
+exports.getItemsLocationByItemIdAndCustomerId = async (req,res,next) => {
+  const { invoiceId,customerId } = req.body;
+  console.log('-----------------------')
+  console.log(req.body)
+  try {
+    const item = await Customer.findAll({
+      where: { id: customerId },
+      include: [
+        {
+          model: Invoice,
+          where: { id: invoiceId },
+          include: [
+            {
+              model: Items,
+              include: [
+                {
+                  model: Shelf,
+                  include: [
+                    {
+                      model: Warehouse,
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      attributes: [
+        'first_name',
+        [Sequelize.col('invoices.items.id'), 'item_id'],
+        [Sequelize.col('invoices.items.shelf.id'), 'shelf'],
+        [Sequelize.col('invoices.items.shelf.warehouse.location'), 'location'],
+      ],
+    });
+    
+
+    if (!item || item.length === 0) {
+      createError("item not found", 400);
+    }
+    res.status(200).json(item)
+  }catch(err){
+    next(err)
   }
 }
