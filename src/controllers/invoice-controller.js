@@ -40,9 +40,6 @@ exports.CreateInvoice = async (req, res, next) => {
 
 exports.getInvoiceById = async (req, res, next) => {
   try {
-    if (req.user.role !== "ADMIN" || "EMPLOYEE") {
-      createError("you are not admin", 400);
-    }
     const myInvoice = await Invoice.findAll({
       where: {
         customerId: req.user.id
@@ -113,7 +110,7 @@ exports.Omise = async( req, res, next) => {
 
 exports.getAllInvoiceByAdmin = async (req, res, next) => {
   try {
-    if (req.user.role !== "ADMIN") {
+    if (!req.user.role) {
       createError("you are not admin", 400);
     }
     const invoice = await Invoice.findAll({
