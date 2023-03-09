@@ -11,7 +11,7 @@ router.post("/createTask", adminController.createTask);
 router.patch("/:taskId", adminController.updateTask);
 router.get("/employee", adminController.getEmployee);
 router.get("/employee/task", adminController.getTaskEmployee);
-router.post("/employee/qrcode/in",adminController.updateDateIn);
-router.post("/employee/qrcode/out",adminController.updateDateOut);
+router.post("/employee/qrcode/in", adminController.updateDateIn);
+router.post("/employee/qrcode/out", adminController.updateDateOut);
 
 module.exports = router;
