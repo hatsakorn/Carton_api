@@ -16,8 +16,6 @@ exports.getAllPackage = async (req, res, next) => {
   }
 };
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 exports.postPackage = async (req, res, next) => {
   try {
     if (!req.user.role) {
@@ -30,9 +28,6 @@ exports.postPackage = async (req, res, next) => {
     const startDate = { startDate: req.body.startDate };
     const endDate = { endDate: req.body.endDate };
     const { posterUrl } = req.files;
-    // console.log("*******************************");
-
-    // console.log("*******************************");
     let posterUrl2;
     if (posterUrl) {
       const posterUrlPublicId = posterUrl[0].path
@@ -67,12 +62,7 @@ exports.postPackage = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-  //  finally {
-  //   fs.unlinkSync(req.files.posterUrl[0].path);
-  // }
 };
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 exports.patchStatusPackage = async (req, res, next) => {
   try {

@@ -56,8 +56,6 @@ const customerRegisterSchema = Joi.object({
 
 exports.customerValidateRegister = validate(customerRegisterSchema);
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 const employeeRegisterSchema = Joi.object({
   firstName: Joi.string().trim().required().messages({
     "any.required": "first name is required",

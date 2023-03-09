@@ -13,7 +13,6 @@ const { Op } = require("sequelize");
 exports.login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
-
     const customer = await Customer.findOne({
       where: {
         username: username
@@ -41,13 +40,9 @@ exports.login = async (req, res, next) => {
     let accessToken;
     if (customer) {
       const isCorrect = await bcrypt.compare(password, customer.password);
-
-      // console.log(customer.password);
-
       if (!isCorrect) {
         createError("invalid username or password");
       }
-
       accessToken = jwt.sign(
         {
           id: customer.id,
@@ -109,7 +104,6 @@ exports.login = async (req, res, next) => {
         }
       );
     }
-    // console.log(accessToken);
     res.status(200).json({ accessToken });
   } catch (err) {
     next(err);
@@ -146,11 +140,6 @@ exports.customerRegister = async (req, res, next) => {
     if (employee) {
       createError("username or email is already in use", 400);
     }
-
-    // console.log(customer);
-    // if (customer === employee) {
-    //   createError("username or email is already in use", 400);
-    // }
     value.password = await bcrypt.hash(value.password, 12);
     await Customer.create(value);
 
@@ -161,8 +150,6 @@ exports.customerRegister = async (req, res, next) => {
     next(err);
   }
 };
-
-////////////////////////////////////////////////////////////////////////////////////////
 
 exports.employeeRegister = async (req, res, next) => {
   try {
@@ -206,8 +193,6 @@ exports.employeeRegister = async (req, res, next) => {
     next(err);
   }
 };
-
-////////////////////////////////////////////////////////////////////////////////////////
 
 exports.getMe = (req, res, next) => {
   res.status(200).json({ user: req.user });

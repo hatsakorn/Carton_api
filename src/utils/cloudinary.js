@@ -17,6 +17,5 @@ exports.upload = async (filePath, publicId) => {
 
 exports.getPublicId = (url) => {
   const splitSlash = url.split("\\");
-  console.log(splitSlash);
   return splitSlash[splitSlash.length - 1].split(".")[0];
 };
